@@ -31,7 +31,6 @@ import * as firebaseui from 'firebaseui';
 // Document elements
 const startRsvpButton = document.getElementById('startRsvp');
 const guestbookContainer = document.getElementById('guestbook-container');
-
 const form = document.getElementById('leave-message');
 const input = document.getElementById('message');
 const guestbook = document.getElementById('guestbook');
@@ -225,5 +224,41 @@ async function main() {
     rsvpYes.className = '';
     rsvpNo.className = '';
   }
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      
+      // The user is logged in
+      const userId = user.uid;
+      const usernameRef = db.ref(`guestbook/${userId}/username`);
+  
+      // Retrieve the username from the database and display it on the web app
+      usernameRef.once('value')
+        .then((snapshot) => {
+          const username = snapshot.val();
+          console.log(`Logged in as ${username}`);
+        });
+    } else {
+      // The user is not logged in
+      console.log('Not logged in');
+    }
+  });
+
+  const usernameElement = document.getElementById('username');
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    const userId = user.uid;
+    const usernameRef = database.ref(`users/${userId}/username`);
+
+    usernameRef.once('value')
+      .then((snapshot) => {
+        const username = snapshot.val();
+        usernameElement.innerHTML = `Logged in as ${username}`;
+      });
+  } else {
+    usernameElement.innerHTML = 'Not logged in';
+  }
+});
+
 }
 main();
