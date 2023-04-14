@@ -103,7 +103,7 @@ async function main() {
   // Listen to the current Auth state
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      startRsvpButton.textContent = 'LOGOUT';
+      startRsvpButton.textContent = 'Logga ut';
       // Show guestbook to logged-in users
       guestbookContainer.style.display = 'block';
 
@@ -112,7 +112,7 @@ async function main() {
       // Subcribe to the user's RSVP
       subscribeCurrentRSVP(user);
     } else {
-      startRsvpButton.textContent = 'Anmäl dig';
+      startRsvpButton.textContent = 'Logga in';
       // Hide guestbook for non-logged-in users
       guestbookContainer.style.display = 'none';
       // Unsubscribe from the guestbook collection
