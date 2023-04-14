@@ -111,6 +111,12 @@ async function main() {
       subscribeGuestbook();
       // Subcribe to the user's RSVP
       subscribeCurrentRSVP(user);
+
+      // Get the current user's display name and display it on the page
+      const displayName = user.displayName;
+      const usernameElement = document.getElementById('username');
+      usernameElement.innerHTML = `Välkommen ${displayName}`;
+
     } else {
       startRsvpButton.textContent = 'Logga in';
       // Hide guestbook for non-logged-in users
@@ -215,7 +221,6 @@ const NotUnsubscribe = onSnapshot(NoAttendingQuery, (snap) => {
 });
 
 
-  numberNoAttending
 
   
   // Listen for attendee list
@@ -234,10 +239,7 @@ const NotUnsubscribe = onSnapshot(NoAttendingQuery, (snap) => {
           rsvpNo.className = 'clicked';
         }
 
-        // Get the current user's display name and display it on the page
-        const displayName = user.displayName;
-        const usernameElement = document.getElementById('username');
-        usernameElement.innerHTML = `${displayName}`;
+        
       }
     });
   }

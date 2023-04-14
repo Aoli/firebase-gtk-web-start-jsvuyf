@@ -83,7 +83,7 @@ p {
 
 #guestbook > p {
   font-weight: lighter;
-  font-size: 14px;
+  font-size: 12px;
   font-style: italic;
 }
 
@@ -91,7 +91,6 @@ input{
   border: none;
   border-bottom: 1px solid rgba(0,0,0,.12);
   font-size: 14px;
-  font-style: italic;
   padding: 4px 0;
   background: 0 0;
   text-align: left;
