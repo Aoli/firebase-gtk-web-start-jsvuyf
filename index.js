@@ -58,8 +58,14 @@ async function main() {
 
   // initializeApp(firebaseConfig);
   initializeApp(firebaseConfig);
+  // initializeApp(firebaseConfig);
   auth = getAuth();
   db = getFirestore();
+  // Get a reference to the authentication and database services
+
+  // Get a reference to the authentication and database services
+  // const auth = firebase.auth();
+  // database = database();
 
   // FirebaseUI config
   const uiConfig = {
@@ -105,7 +111,7 @@ async function main() {
       // Subcribe to the user's RSVP
       subscribeCurrentRSVP(user);
     } else {
-      startRsvpButton.textContent = 'RSVP';
+      startRsvpButton.textContent = 'Anmäl dig';
       // Hide guestbook for non-logged-in users
       guestbookContainer.style.display = 'none';
       // Unsubscribe from the guestbook collection
@@ -140,7 +146,7 @@ async function main() {
     guestbookListener = onSnapshot(q, (snaps) => {
       // Reset page
       guestbook.innerHTML = '';
-      
+
       // Loop through documents in database
       snaps.forEach((doc) => {
         // Create an HTML entry for each document and add it to the chat
@@ -212,6 +218,11 @@ async function main() {
           rsvpYes.className = '';
           rsvpNo.className = 'clicked';
         }
+
+        // Get the current user's display name and display it on the page
+        const displayName = user.displayName;
+        const usernameElement = document.getElementById('username');
+        usernameElement.innerHTML = `${displayName}`;
       }
     });
   }
@@ -224,41 +235,5 @@ async function main() {
     rsvpYes.className = '';
     rsvpNo.className = '';
   }
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      
-      // The user is logged in
-      const userId = user.uid;
-      const usernameRef = db.ref(`guestbook/${userId}/username`);
-  
-      // Retrieve the username from the database and display it on the web app
-      usernameRef.once('value')
-        .then((snapshot) => {
-          const username = snapshot.val();
-          console.log(`Logged in as ${username}`);
-        });
-    } else {
-      // The user is not logged in
-      console.log('Not logged in');
-    }
-  });
-
-  const usernameElement = document.getElementById('username');
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    const userId = user.uid;
-    const usernameRef = database.ref(`users/${userId}/username`);
-
-    usernameRef.once('value')
-      .then((snapshot) => {
-        const username = snapshot.val();
-        usernameElement.innerHTML = `Logged in as ${username}`;
-      });
-  } else {
-    usernameElement.innerHTML = 'Not logged in';
-  }
-});
-
 }
 main();
