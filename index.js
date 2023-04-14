@@ -201,7 +201,7 @@ async function main() {
   );
   const unsubscribe = onSnapshot(attendingQuery, (snap) => {
     const newAttendeeCount = snap.docs.length;
-    numberAttending.innerHTML = newAttendeeCount + ' people going';
+    numberAttending.innerHTML = newAttendeeCount + ' vänner har anmält sig';
   });
 
 // Listen for attendee list
@@ -211,7 +211,7 @@ const NoAttendingQuery = query(
 );
 const NotUnsubscribe = onSnapshot(NoAttendingQuery, (snap) => {
   const NotnewAttendeeCount = snap.docs.length;
-  NotNumberAttending.innerHTML = NotnewAttendeeCount + ' people Not going';
+  NotNumberAttending.innerHTML = NotnewAttendeeCount + ' vänner har anmält att de inte kommer';
 });
 
 
