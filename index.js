@@ -35,6 +35,7 @@ const form = document.getElementById('leave-message');
 const input = document.getElementById('message');
 const guestbook = document.getElementById('guestbook');
 const numberAttending = document.getElementById('number-attending');
+const NotNumberAttending = document.getElementById('number-NoAttending');
 const rsvpYes = document.getElementById('rsvp-yes');
 const rsvpNo = document.getElementById('rsvp-no');
 
@@ -183,7 +184,7 @@ async function main() {
     // Get a reference to the user's document in the attendees collection
     const userRef = doc(db, 'attendees', auth.currentUser.uid);
 
-    // If they RSVP'd yes, save a document with attending: true
+    // If they RSVP'd yes, save a document with attending: false
     try {
       await setDoc(userRef, {
         attending: false,
@@ -203,6 +204,20 @@ async function main() {
     numberAttending.innerHTML = newAttendeeCount + ' people going';
   });
 
+// Listen for attendee list
+const NoAttendingQuery = query(
+  collection(db, 'attendees'),
+  where('attending', '==', false)
+);
+const NotUnsubscribe = onSnapshot(NoAttendingQuery, (snap) => {
+  const NotnewAttendeeCount = snap.docs.length;
+  NotNumberAttending.innerHTML = NotnewAttendeeCount + ' people Not going';
+});
+
+
+  numberNoAttending
+
+  
   // Listen for attendee list
   function subscribeCurrentRSVP(user) {
     const ref = doc(db, 'attendees', user.uid);
